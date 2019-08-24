@@ -6,9 +6,9 @@ var pool = mysql.createPool({
   database: 'rootbook'
 });
 
-function query(sql, callback) {
-  pool.getConnection(function(err, connection) {
-    connection.query(sql, function(err, rows) {
+function query(sql, value, callback) {
+  pool.getConnection(function (err, connection) {
+    connection.query(sql, value, function (err, rows) {
       callback(err, rows);
       connection.release();
     });
