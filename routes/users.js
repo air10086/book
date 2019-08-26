@@ -96,6 +96,15 @@ router.post('/', jsonParser, function (req, res, next) {
         if (err) throw err;
         if (result.length >= 1) {
           if (result[0].password === password) {
+            res.cookie('userId', result[0].id, {
+              maxAge: 24 * 60 * 60 * 1000
+            });
+            res.cookie('username', result[0].username, {
+              maxAge: 24 * 60 * 60 * 1000
+            });
+            res.cookie('userImg', result[0].avatar, {
+              maxAge: 24 * 60 * 60 * 1000
+            })
             var data = {
               code: 200,
               data: result,
@@ -103,6 +112,7 @@ router.post('/', jsonParser, function (req, res, next) {
               msg: `登录成功,你好,${result[0].username}`
             };
             res.json(data);
+
           } else {
             var data = {
               code: -1,

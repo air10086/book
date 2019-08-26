@@ -10,10 +10,10 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // 跨域
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', '*'); // 设置允许所有源访问
-  res.header('Access-Control-Allow-Headers', 'content-type'); // 设置请求类型
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3001'); // 设置允许所有源访问
+  res.header('Access-Control-Allow-Headers', 'content-type,Origin,X-Requested-With,Accept,Authorization'); // 设置请求类型
   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS'); // 设置 允许的方法
   res.header('X-Powered-By', ' 3.2.1');
   res.header('Content-Type', 'application/json;charset=utf-8');
@@ -30,7 +30,9 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,12 +40,12 @@ app.use('/', indexRouter);
 app.use('/login', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
